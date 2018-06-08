@@ -1,28 +1,36 @@
-def test(a, b, c):
+import time
+from enum import Enum
+
+
+class TriangleType(Enum):
+    INVALID, EQUALATERAL, ISOCELES, SCALENE = 0, 1, 2, 3
+
+
+def classify_triangle(a, b, c):
+    assert type(a) == int or type(a) == float
+    assert type(b) == int or type(b) == float
+    assert type(c) == int or type(c) == float
+    # Sort the sides so that a <= b <= c
     if a > b:
-        t = a
+        tmp = a
         a = b
-        b = t
+        b = tmp
+
     if a > c:
-        t = a
+        tmp = a
         a = c
-        c = t
+        c = tmp
+
     if b > c:
-        t = b
+        tmp = b
         b = c
-        c = t
+        c = tmp
 
     if a + b <= c:
-        ty = 0
+        return TriangleType.INVALID
+    elif a == b and b == c:
+        return TriangleType.EQUALATERAL
+    elif a == b or b == c:
+        return TriangleType.ISOCELES
     else:
-        ty = 1
-        if a == b:
-            if b == c:
-                ty = 3
-        else:
-            if a == b:
-                ty = 4
-            elif b == c:
-                ty = 4
-    
-    return ty
+        return TriangleType.SCALENE
